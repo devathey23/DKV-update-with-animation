@@ -16,13 +16,36 @@ function App() {
   const [activeTab, setActiveTab] = useState<TabType>('jadwal');
   const [isLogOpen, setIsLogOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const [hasNewUpdate, setHasNewUpdate] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const handleTabChange = (newTab: TabType) => {
     setActiveTab(newTab);
+    if (isFirstLoad) {
+      setIsFirstLoad(false);
+    }
+  };
+
+  const handleLogOpen = () => {
+    setIsLogOpen(true);
+    localStorage.setItem('lastSeenVersion', 'v2.1');
+    setHasNewUpdate(false);
   };
 
   useEffect(() => {
+    const lastSeenVersion = localStorage.getItem('lastSeenVersion');
+    const currentVersion = 'v2.1';
+    if (lastSeenVersion !== currentVersion) {
+      setHasNewUpdate(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isFirstLoad && activeTab === 'jadwal') {
+      return;
+    }
+
     if (contentRef.current) {
       const header = contentRef.current.querySelector('h2');
       if (header) {
@@ -30,7 +53,7 @@ function App() {
         window.scrollTo({ top: headerPosition, behavior: 'instant' });
       }
     }
-  }, [activeTab]);
+  }, [activeTab, isFirstLoad]);
 
   // Menu Configuration
   const tabs = [
@@ -66,10 +89,13 @@ function App() {
              <div className="text-white font-heading font-semibold tracking-wide text-sm">XI DKV 2</div>
            </div>
            <button
-             onClick={() => setIsLogOpen(true)}
-             className="bg-white/5 hover:bg-white/10 text-slate-300 p-2 rounded-full transition-all duration-fast ease-smooth border border-white/5 active:scale-95"
+             onClick={handleLogOpen}
+             className={`relative bg-white/5 hover:bg-white/10 text-slate-300 p-2 rounded-full transition-all duration-fast ease-smooth border border-white/5 active:scale-95 ${hasNewUpdate ? 'animate-pulse' : ''}`}
            >
-             <Sparkles size={18} />
+             {hasNewUpdate && (
+               <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-cyan-400 rounded-full shadow-[0_0_12px_rgba(34,211,238,0.8)] animate-pulse"></span>
+             )}
+             <Sparkles size={18} className={hasNewUpdate ? 'text-cyan-400' : ''} />
            </button>
         </div>
 
@@ -137,7 +163,7 @@ function App() {
 
       </div>
 
-      <LogModal isOpen={isLogOpen} onClose={() => setIsLogOpen(false)} />
+      <LogModal isOpen={isLogOpen} onClose={() => setIsLogOpen(false)} hasNewUpdate={hasNewUpdate} />
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
       <PJOKInfoCard />
     </div>

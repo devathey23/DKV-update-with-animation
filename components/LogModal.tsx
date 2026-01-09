@@ -4,9 +4,10 @@ import { X, Sparkles } from 'lucide-react';
 interface LogModalProps {
   isOpen: boolean;
   onClose: () => void;
+  hasNewUpdate: boolean;
 }
 
-export const LogModal: React.FC<LogModalProps> = ({ isOpen, onClose }) => {
+export const LogModal: React.FC<LogModalProps> = ({ isOpen, onClose, hasNewUpdate }) => {
   if (!isOpen) return null;
 
   return (
@@ -34,7 +35,7 @@ export const LogModal: React.FC<LogModalProps> = ({ isOpen, onClose }) => {
         {/* Body */}
         <div className="p-6 max-h-[60vh] overflow-y-auto space-y-8">
 
-          <div className="relative pl-8 border-l border-primary/30">
+          <div className={`relative pl-8 border-l border-primary/30 ${hasNewUpdate ? 'animate-pulse-glow' : ''}`}>
             <span className="absolute -left-[5px] top-0 w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_10px_rgba(139,92,246,0.5)]"></span>
             <div className="mb-2 flex flex-wrap items-center gap-2">
                 <h3 className="font-bold text-white text-lg">Kavitwo Connect</h3>
@@ -62,6 +63,10 @@ export const LogModal: React.FC<LogModalProps> = ({ isOpen, onClose }) => {
               <li className="flex gap-2">
                 <span className="text-accent">●</span>
                 <span>Penambahan kartu informasi PJOK.</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-accent">●</span>
+                <span>Menambahkan fitur download informasi kelas dalam format PDF.</span>
               </li>
             </ul>
           </div>

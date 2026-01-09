@@ -33,6 +33,7 @@
               'page-enter': 'pageEnter 0.18s cubic-bezier(0.16, 1, 0.3, 1)',
               'modal-enter': 'modalEnter 0.16s cubic-bezier(0.16, 1, 0.3, 1)',
               'slide-in': 'slideIn 0.22s cubic-bezier(0.16, 1, 0.3, 1)',
+              'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
             },
             keyframes: {
               blob: {
@@ -52,6 +53,10 @@
               slideIn: {
                 '0%': { transform: 'translateX(-100%)' },
                 '100%': { transform: 'translateX(0)' },
+              },
+              pulseGlow: {
+                '0%, 100%': { boxShadow: '0 0 0 0 rgba(139, 92, 246, 0.4)' },
+                '50%': { boxShadow: '0 0 0 6px rgba(139, 92, 246, 0)' },
               }
             },
             transitionTimingFunction: {

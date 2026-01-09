@@ -23,15 +23,15 @@ export const SubstituteTab: React.FC = () => {
 
       <div className="space-y-4">
         {substituteData.map((sub, index) => (
-          <div key={index} className="bg-white/5 border-l-4 border-primary rounded-r-xl p-5 flex flex-col md:flex-row md:items-center gap-4 hover:bg-white/10 transition-all duration-fast ease-smooth active:scale-[0.99]">
-            <div className="bg-primary/20 p-3 rounded-full text-primary w-fit">
+          <div key={index} className="bg-white/5 border-l-4 border-primary rounded-r-xl p-5 flex flex-col md:flex-row md:items-center gap-4 group hover:bg-white/10 transition-all duration-fast ease-smooth active:scale-[0.99]">
+            <div className="bg-primary/20 p-3 rounded-full text-primary w-fit group-hover:scale-110 transition-transform duration-fast">
               <UserCheck size={24} />
             </div>
 
             <div className="flex-1">
-              <div className="flex flex-wrap items-center gap-2 mb-1">
-                <h3 className="font-heading font-bold text-white text-lg break-words">{sub.name}</h3>
-                <span className="bg-white/10 text-slate-300 text-[10px] px-2 py-1 rounded border border-white/10 font-mono">
+              <div className="flex flex-col md:flex-row md:flex-wrap md:items-center gap-2 mb-1">
+                <h3 className="font-heading font-bold text-white text-lg break-words group-hover:text-primary transition-colors duration-fast">{sub.name}</h3>
+                <span className="bg-white/10 text-slate-300 text-[10px] px-2 py-1 rounded border border-white/10 font-mono w-fit">
                   {sub.code}
                 </span>
               </div>
